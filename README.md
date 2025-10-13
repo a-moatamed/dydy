@@ -30,18 +30,20 @@ Requirements
 
 Quick Start
 1) Batch simulation (default 1 ms):
-   - ./run/run.sh --clean
-   - ./run/run.sh
-2) Choose test:
-   - ./run/run.sh +UVM_TESTNAME=base_test
+   - make -C run clean
+   - make -C run run_sim
+2) Choose test (plusargs):
+   - make -C run run_sim ARGS='+UVM_TESTNAME=base_test'
 3) Shorter/longer run time:
-   - ./run/run.sh --time 100us
-4) GUI (replay/open waves):
-   - ./run/run.sh --gui
+   - make -C run run_sim TIME=100us
+4) GUI (re-simulate with GUI):
+   - make -C run gui
+5) View existing waves without re-simulating:
+   - make -C run view
 
 Artifacts
 - Logs: run/logs/sim.log (also copied to vivado.log)
-- Wave DB: run/sim/xsim.wdb (loaded in GUI if present)
+- Wave DB: run/sim/xsim.wdb (open via `make -C run view`)
 
 Customization Tips
 - Add your DUT under src/rtl and include it in run/files.f.
