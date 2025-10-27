@@ -1,3 +1,15 @@
+**======== Do not remove! ========** 
+
+Team name: To do
+
+Module: To do
+
+Member#1: John Doe<br>
+Member#2: John Doe<br>
+Member#3: John Doe<br>
+
+**================================**
+
 Functional Verification UVM Template (Vivado 2024.2)
 
 Overview
@@ -86,3 +98,10 @@ Modules
 - Adder/Subtracter
 - Floating-point
 - CORDIC
+
+Lab 1 tasks:
+- clone the template repository, add your information in the readme
+- generate the RTL source for your IP
+- populate the interface (my_if.sv) with the signals needed for your module
+- instantiate the DUT in the top module (top.sv), connect the interface signals, generate the clock and the initial reset
+- run a simulation to make sure everything works
