@@ -6,7 +6,7 @@ Module: AXI Register Slice
 
 Member#1: Mahazoasy Narindra<br>
 Member#2: Waleed Hussain<br>
-Member#3:<br>
+Member#3:Abomosa Abdelrahman <br>
 
 **================================**
 
