@@ -13,3 +13,9 @@ You should begin by reviewing this week’s source code (the one we discussed du
 After that, take some time to plan your own setup. You don’t necessarily need to reuse the same seq_item, sequence, or other components from the lab example (where we focused on generating register accesses). Instead, think about the interfaces your module provides and decide which agents you’ll need. Based on that, determine what seq_item, sequence, and related classes are required for your design.
 
 For now, create only a simple test to verify that everything you’ve implemented so far works correctly. The tests will become more complex later, once you have more functionality in your design.
+
+Use https://www.chipverify.com/ for quick references. These are some examples that may be useful:
+- https://www.chipverify.com/uvm/uvm-testbench-example-1
+- https://www.chipverify.com/uvm/uvm-phases
+- https://www.chipverify.com/uvm/report-functions
+- https://www.chipverify.com/uvm/uvm-sequence
