@@ -17,15 +17,13 @@ module top;
         .ARESETn(rst_n)
     );
 
+    // DUT Instantiation
     axi_register_slice_v2_1_22_axi_register_slice #(
-        .C_AXI_DATA_WIDTH(DATA_WIDTH),
-        .C_AXI_ADDR_WIDTH(ADDR_WIDTH)
+        .C_AXI_DATA_WIDTH(DATA_WIDTH), 
+        .C_AXI_ADDR_WIDTH(ADDR_WIDTH) 
     ) dut (
-        // Global Signals
         .aclk(axi_vif.ACLK),
         .aresetn(axi_vif.ARESETn),
-
-        // Slave Interface
         .s_axi_awaddr(axi_vif.S_AXI_AWADDR),
         .s_axi_awprot(axi_vif.S_AXI_AWPROT),
         .s_axi_awvalid(axi_vif.S_AXI_AWVALID),
@@ -45,8 +43,6 @@ module top;
         .s_axi_rresp(axi_vif.S_AXI_RRESP),
         .s_axi_rvalid(axi_vif.S_AXI_RVALID),
         .s_axi_rready(axi_vif.S_AXI_RREADY),
-
-        // Master Interface
         .m_axi_awaddr(axi_vif.M_AXI_AWADDR),
         .m_axi_awprot(axi_vif.M_AXI_AWPROT),
         .m_axi_awvalid(axi_vif.M_AXI_AWVALID),
@@ -68,23 +64,57 @@ module top;
         .m_axi_rready(axi_vif.M_AXI_RREADY)
     );
 
-    // Clock Generation (e.g., 100MHz)
+    always_comb begin
+      axi_vif.M_AXI_AWREADY = 1'b1;
+      axi_vif.M_AXI_WREADY  = 1'b1;
+      axi_vif.M_AXI_ARREADY = 1'b1;
+    end
+
+
+    logic bvalid_reg = 0;
+    logic rvalid_reg = 0;
+
+    always_ff @(posedge axi_vif.ACLK or negedge axi_vif.ARESETn) begin
+      if (!axi_vif.ARESETn)
+        bvalid_reg <= 1'b0;
+      else if (bvalid_reg && axi_vif.M_AXI_BREADY) 
+        bvalid_reg <= 1'b0; 
+      else if (axi_vif.M_AXI_WVALID && axi_vif.M_AXI_WREADY) 
+        bvalid_reg <= 1'b1; 
+    end
+    
+    always_ff @(posedge axi_vif.ACLK or negedge axi_vif.ARESETn) begin
+      if (!axi_vif.ARESETn)
+        rvalid_reg <= 1'b0;
+      else if (rvalid_reg && axi_vif.M_AXI_RREADY) 
+        rvalid_reg <= 1'b0; 
+      else if (axi_vif.M_AXI_ARVALID && axi_vif.M_AXI_ARREADY) 
+        rvalid_reg <= 1'b1; 
+    end
+
+
+    assign axi_vif.M_AXI_BVALID = bvalid_reg;
+    assign axi_vif.M_AXI_BRESP  = 2'b00; 
+    
+    assign axi_vif.M_AXI_RVALID = rvalid_reg;
+    assign axi_vif.M_AXI_RDATA  = 32'hCAFEBABE; 
+    assign axi_vif.M_AXI_RRESP  = 2'b00; 
+    assign axi_vif.M_AXI_RLAST  = rvalid_reg; 
+    
     initial begin
         clk = 0;
         forever #5ns clk = ~clk;
     end
 
-    // Reset Generation and Test Start
-    initial begin
-        // Pass virtual interface to UVM environment
-        uvm_config_db#(virtual my_if)::set(null, "uvm_test_top", "vif", axi_vif);
 
-        // Drive reset
+    initial begin
+        
+        uvm_config_db#(virtual my_if)::set(null, "uvm_test_top", "vif", axi_vif);
+        
         rst_n = 1'b0;
         #20ns;
         rst_n = 1'b1;
-
-        // Run the UVM test
+        
         run_test();
     end
 

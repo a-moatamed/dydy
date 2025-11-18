@@ -25,8 +25,8 @@ class base_test extends uvm_test;
       seq.start(m_env.agt.seqr);
     end
 
-    // TODO: Add end-of-test conditions / timeouts
-    // #1000ns;
+   
+    #1000ns;
 
     phase.drop_objection(this);
   endtask

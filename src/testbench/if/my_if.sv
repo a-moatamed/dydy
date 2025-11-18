@@ -12,7 +12,7 @@ interface my_if #(
     logic                       S_AXI_AWVALID;
     logic                       S_AXI_AWREADY;
     logic [ADDR_WIDTH-1:0]      S_AXI_AWADDR;
-    logic [7:0]                 S_AXI_AWPROT; // Or [2:0] for AXI3
+    logic [2:0]                 S_AXI_AWPROT; 
 
     // Write Data Channel
     logic                       S_AXI_WVALID;
@@ -30,7 +30,7 @@ interface my_if #(
     logic                       S_AXI_ARVALID;
     logic                       S_AXI_ARREADY;
     logic [ADDR_WIDTH-1:0]      S_AXI_ARADDR;
-    logic [7:0]                 S_AXI_ARPROT; // Or [2:0] for AXI3
+    logic [2:0]                 S_AXI_ARPROT; 
 
     // Read Data Channel
     logic                       S_AXI_RVALID;
@@ -45,7 +45,7 @@ interface my_if #(
     logic                       M_AXI_AWVALID;
     logic                       M_AXI_AWREADY;
     logic [ADDR_WIDTH-1:0]      M_AXI_AWADDR;
-    logic [7:0]                 M_AXI_AWPROT;
+    logic [2:0]                 M_AXI_AWPROT;
 
     // Write Data Channel
     logic                       M_AXI_WVALID;
@@ -63,7 +63,7 @@ interface my_if #(
     logic                       M_AXI_ARVALID;
     logic                       M_AXI_ARREADY;
     logic [ADDR_WIDTH-1:0]      M_AXI_ARADDR;
-    logic [7:0]                 M_AXI_ARPROT;
+    logic [2:0]                 M_AXI_ARPROT;
 
     // Read Data Channel
     logic                       M_AXI_RVALID;

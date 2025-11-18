@@ -1,38 +1,34 @@
 // Basic sequence item (transaction)
 
 class seq_item extends uvm_sequence_item;
-  `uvm_object_utils(seq_item)
 
-  // TODO: Declare transaction fields, e.g. addr, data, op, etc.
-  // rand bit [31:0] addr;
-  // rand bit [31:0] data;
-  // rand bit        write;
+  rand bit is_write;
+  rand bit [31:0] addr;
+  rand bit [31:0] wdata;
+       bit [31:0] rdata;
 
-  // TODO: Add constraints for valid transactions
-  // constraint c_default { /* add constraints */ }
+  constraint c_simple_addr {
+    addr[1:0] == 2'b0; 
+    addr inside { [32'h0 : 32'h1000] };
+  }
+  `uvm_object_utils_begin(seq_item)
+    `uvm_field_int(is_write, UVM_ALL_ON)
+    `uvm_field_int(addr,     UVM_ALL_ON | UVM_HEX) 
+    `uvm_field_int(wdata,    UVM_ALL_ON | UVM_HEX)
+    `uvm_field_int(rdata,    UVM_ALL_ON | UVM_HEX)
+  `uvm_object_utils_end
 
   function new(string name = "seq_item");
     super.new(name);
-  endfunction
+  endfunction;
 
-  // TODO: Implement do_copy if custom deep copy is needed
-  // virtual function void do_copy(uvm_object rhs);
-  //   seq_item rhs_; if(!$cast(rhs_, rhs)) `uvm_fatal(get_name(), "cast failed")
-  //   super.do_copy(rhs);
-  //   // copy fields
-  // endfunction
+function string convert2string();
+    string s;
+    $sformat(s, "AXI Tx: %s Addr: 0x%h, WData: 0x%h, RData: 0x%h",
+             (is_write ? "WRITE" : "READ "),
+             addr, wdata, rdata);
+    return s;
+  endfunction;
 
-  // TODO: Implement do_compare for scoreboarding if needed
-  // virtual function bit do_compare(uvm_object rhs, uvm_comparer comparer);
-  //   seq_item rhs_; if(!$cast(rhs_, rhs)) return 0;
-  //   do_compare = super.do_compare(rhs, comparer);
-  //   // compare fields
-  // endfunction
-
-  // Optional: pretty printing
-  function string convert2string();
-    // TODO: customize as needed
-    return $sformatf("seq_item()");
-  endfunction
 endclass : seq_item
 
