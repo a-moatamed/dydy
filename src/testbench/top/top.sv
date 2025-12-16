@@ -115,7 +115,7 @@ module top;
         #20ns;
         rst_n = 1'b1;
         
-        run_test();
+        run_test("base_test");
     end
 
 endmodule

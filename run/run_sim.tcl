@@ -118,7 +118,7 @@ foreach f $compile_list {
 # Elaborate
 puts "[clock format [clock seconds]]: Elaborating (xelab)..."
 set xelab_top work.top
-set xelab_opts [list xelab $xelab_top -L uvm -debug typical -timescale 1ns/1ps]
+set xelab_opts [list xelab $xelab_top -L unisims_ver -L unimacro_ver -L xpm -L secureip -L uvm -debug typical -timescale 1ns/1ps]
 if {[catch {eval exec $xelab_opts} res]} {
   puts "ERROR during xelab: $res"
   exit 1

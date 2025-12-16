@@ -24,12 +24,12 @@ class my_driver extends uvm_driver #(seq_item);
 
       `uvm_info(get_type_name(), $sformatf("Driver received: %s", req.convert2string()), UVM_MEDIUM)
       
-      @(posedge vif.ACLK);
-      if (req.is_write) begin
-        do_axi_write(req.addr, req.wdata);
-      end else begin
-        do_axi_read(req.addr, req.rdata); 
-      end
+    @(posedge vif.ACLK);
+      // if (req.is_write) begin
+      //   do_axi_write(req.addr, req.wdata);
+      // end else begin
+      //   do_axi_read(req.addr, req.rdata); 
+      // end
       
       seq_item_port.item_done();
     end
@@ -43,8 +43,8 @@ class my_driver extends uvm_driver #(seq_item);
     vif.S_AXI_AWPROT  <= 3'b0;
     wait (vif.S_AXI_AWREADY == 1);
     @(posedge vif.ACLK);
+    
     vif.S_AXI_AWVALID <= 1'b0;
-
     @(posedge vif.ACLK);
     vif.S_AXI_WVALID <= 1'b1;
     vif.S_AXI_WDATA  <= wdata;
