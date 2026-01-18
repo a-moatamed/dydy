@@ -1,4 +1,7 @@
-// top.sv
+// Simple top-level. Instantiates DUT (to be added) and kicks off UVM.
+
+`timescale 1ns/1ps
+
 `include "uvm_macros.svh"
 import uvm_pkg::*;
 
