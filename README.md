@@ -105,3 +105,14 @@ Lab 1 tasks:
 - populate the interface (my_if.sv) with the signals needed for your module
 - instantiate the DUT in the top module (top.sv), connect the interface signals, generate the clock and the initial reset
 - run a simulation to make sure everything works
+
+
+# how to run it
+
+```
+make -C run sources ip_name=axi_register_slice
+```
+```
+make -C run clean
+make -C run run_sim ARGS='sim_time 20us +UVM_TESTNAME=axi_test +UVM_VERBOSITY=UVM_HIGH'
+```

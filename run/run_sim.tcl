@@ -135,10 +135,12 @@ if {$mode eq "batch"} {
   puts $fh2 "quit"
   close $fh2
 
-  set plus ""
-  if {[llength $plusargs] > 0} { set plus [join $plusargs { }] }
-  set cmd [list xsim top -tclbatch $sim_tcl -wdb xsim.wdb]
-  if {$plus ne ""} { lappend cmd --testplusarg "$plus" }
+  set cmd [list xsim work.top -tclbatch $sim_tcl -wdb xsim.wdb]
+  foreach p $plusargs {
+    lappend cmd --testplusarg $p
+  }
+  puts "[clock format [clock seconds]]: Exec: [join $cmd { }]"
+
   if {[catch {exec -- {*}$cmd} res]} {
     puts "ERROR during xsim: $res"
     exit 1
@@ -154,12 +156,13 @@ if {$mode eq "batch"} {
   puts $fh3 "run 1000ns"
   close $fh3
 
-  set plus ""
-  if {[llength $plusargs] > 0} { set plus [join $plusargs { }] }
-  set cmd [list xsim top -gui -tclbatch $gui_tcl -wdb xsim.wdb]
-  if {$plus ne ""} { lappend cmd --testplusarg "$plus" }
+  set cmd [list xsim work.top -gui -tclbatch $gui_tcl -wdb xsim.wdb]
+  foreach p $plusargs {
+    lappend cmd --testplusarg $p
+  }
   puts "[clock format [clock seconds]]: Exec: [join $cmd { }]"
   exec -- {*}$cmd
+
 }
 
 exit 0
